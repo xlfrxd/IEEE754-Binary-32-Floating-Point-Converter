@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--CSS-->
+    <!--Pyscript-->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.7.1/core.css">
+    <script type="module" src="https://pyscript.net/releases/2024.7.1/core.js"></script>
+</head>
+<body>
+
+    <!--Functions are explicitly called-->
+    <button id="btn" py-click="clicked_btn">I am a button</button>
+
+    <!--Output of clicked_btn-->
+    <div id="output_click"></div>
+
+    <!--Text inputs to calculate sum-->
+    <input type="text" id="first_input" placeholder="Num 1:" />
+    <input type="text" id="second_input" placeholder="Num 2:" />
+    
+    <!--Calculate Sum-->
+    <button id="calculate" py-click="get_sum">Calculate Sum</button>
+
+    <!--Output of get_sum-->
+    <div id="output_sum"></div>
+
+    
+
+<!--Tells the browser that py-script is being used-->
+<script type="py" src="./test.py"></script>
+</body>
+</html>
