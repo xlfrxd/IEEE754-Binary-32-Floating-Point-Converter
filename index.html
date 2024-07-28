@@ -3,33 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!--CSS-->
-    <!--Pyscript-->
-    <link rel="stylesheet" href="https://pyscript.net/releases/2024.7.1/core.css">
-    <script type="module" src="https://pyscript.net/releases/2024.7.1/core.js"></script>
+    <title>IEEE-754 Binary-32 Translator</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <!--Functions are explicitly called-->
-    <button id="btn" py-click="clicked_btn">I am a button</button>
+<div class="container">
+    <h2>IEEE-754 Binary-32 Translator</h2>
+    <div class="form-group">
+        <label for="inputType">Input Type:</label>
+        <select id="inputType" onchange="toggleInputFields()">
+            <option value="hex">Hexadecimal</option>
+            <option value="bin">Binary</option>
+        </select>
+    </div>
+    <div id="hexInputFields" class="form-group">
+        <label for="hexInput">Hexadecimal Input:</label>
+        <input type="text" id="hex1" maxlength="2" placeholder="00">
+        <input type="text" id="hex2" maxlength="2" placeholder="00">
+        <input type="text" id="hex3" maxlength="2" placeholder="00">
+        <input type="text" id="hex4" maxlength="2" placeholder="00">
+    </div>
+    <div id="binInputFields" class="form-group" style="display: none;">
+        <label for="binInput">Binary Input:</label>
+        <input type="text" id="binSign" maxlength="1" placeholder="S">
+        <input type="text" id="binExponent" maxlength="8" placeholder="Exponent">
+        <input type="text" id="binMantissa" maxlength="23" placeholder="Mantissa">
+    </div>
+    <div class="form-group">
+        <label for="outputFormat">Output Format:</label>
+        <select id="outputFormat">
+            <option value="float">Floating Point</option>
+            <option value="fixed">Fixed Point</option>
+        </select>
+    </div>
+    <button onclick="translateIEEE754()">Translate</button>
 
-    <!--Output of clicked_btn-->
-    <div id="output_click"></div>
+    <div class="output" id="outputResult">Result will appear here</div>
+</div>
 
-    <!--Text inputs to calculate sum-->
-    <input type="text" id="first_input" placeholder="Num 1:" />
-    <input type="text" id="second_input" placeholder="Num 2:" />
-    
-    <!--Calculate Sum-->
-    <button id="calculate" py-click="get_sum">Calculate Sum</button>
+<script>
+    function toggleInputFields() {
+        const inputType = document.getElementById("inputType").value;
+        if (inputType === "hex") {
+            document.getElementById("hexInputFields").style.display = "block";
+            document.getElementById("binInputFields").style.display = "none";
+        } else {
+            document.getElementById("hexInputFields").style.display = "none";
+            document.getElementById("binInputFields").style.display = "block";
+        }
+    }
 
-    <!--Output of get_sum-->
-    <div id="output_sum"></div>
+    class IEEE754Translator {
+        constructor(inputType, inputArg) {
+            this.inputType = inputType;
+            this.inputArg = inputArg;
+        }
 
-    
+        calc() {
+            if (this.inputType === "hex") {
+                return this.calcHex(this.inputArg);
+            } else if (this.inputType === "bin") {
+                return this.calcBin(this.inputArg);
+            } else {
+                throw new Error("Invalid input type. Use 'hex' or 'bin'.");
+            }
+        }
 
-<!--Tells the browser that py-script is being used-->
-<script type="py" src="./test.py"></script>
+        calcHex(hexStr) {
+            const binStr = parseInt(hexStr, 16).toString(2).padStart(32, '0');
+            return this.calcBin(binStr);
+        }
+
+        calcBin(binStr) {
+            const sign = parseInt(binStr[0], 2);
+            const exponent = parseInt(binStr.slice(1, 9), 2);
+            const mantissa = parseInt(binStr.slice(9), 2);
+
+            if (exponent === 0) {
+                if (mantissa === 0) {
+                    return sign === 0 ? 0.0 : -0.0;
+                } else {
+                    const exponentActual = -126;
+                    const mantissaActual = mantissa / Math.pow(2, 23);
+                    return Math.pow(-1, sign) * Math.pow(2, exponentActual) * mantissaActual;
+                }
+            } else if (exponent === 255) {
+                if (mantissa === 0) {
+                    return sign === 0 ? Infinity : -Infinity;
+                } else {
+                    return NaN;
+                }
+            } else {
+                const exponentActual = exponent - 127;
+                const mantissaActual = 1 + mantissa / Math.pow(2, 23);
+                return Math.pow(-1, sign) * Math.pow(2, exponentActual) * mantissaActual;
+            }
+        }
+
+        display(value, outputFormat) {
+            if (outputFormat === "fixed") {
+                return value.toFixed(6);
+            } else if (outputFormat === "float") {
+                return value.toString();
+            } else {
+                throw new Error("Invalid output format. Use 'fixed' or 'float'.");
+            }
+        }
+    }
+
+    function translateIEEE754() {
+        const inputType = document.getElementById("inputType").value;
+        let inputValue;
+        if (inputType === "hex") {
+            const hex1 = document.getElementById("hex1").value;
+            const hex2 = document.getElementById("hex2").value;
+            const hex3 = document.getElementById("hex3").value;
+            const hex4 = document.getElementById("hex4").value;
+            inputValue = hex1 + hex2 + hex3 + hex4;
+        } else {
+            const binSign = document.getElementById("binSign").value;
+            const binExponent = document.getElementById("binExponent").value;
+            const binMantissa = document.getElementById("binMantissa").value;
+            inputValue = binSign + binExponent + binMantissa;
+        }
+        const outputFormat = document.getElementById("outputFormat").value;
+
+        try {
+            const translator = new IEEE754Translator(inputType, inputValue);
+            const value = translator.calc();
+            const result = translator.display(value, outputFormat);
+            document.getElementById("outputResult").innerText = result;
+        } catch (error) {
+            document.getElementById("outputResult").innerText = `Error: ${error.message}`;
+        }
+    }
+</script>
+
 </body>
 </html>
