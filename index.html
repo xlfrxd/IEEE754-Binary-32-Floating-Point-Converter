@@ -14,11 +14,43 @@
     <h2>IEEE-754 Binary-32 Converter</h2>
     <div class="form-group">
         <label for="inputType">Input Type:</label>
+        
         <select id="inputType" onchange="toggleInputFields()">
             <option value="binary">Binary Mantissa and Base-2</option>
             <option value="decimal">Decimal Mantissa and Base-10</option>
             <option value="nan">NaN</option>
         </select>
+        <script>
+        function toggleInputFields() {
+            const inputType = document.getElementById('inputType').value;
+            const binaryInputFields = document.getElementById('binaryInputFields');
+            const decimalInputFields = document.getElementById('decimalInputFields');
+            const binaryButton = document.getElementById('getResultBinary');
+            const decimalButton = document.getElementById('getResultDecimal');
+
+            if (inputType === 'binary') {
+                binaryInputFields.style.display = 'block';
+                decimalInputFields.style.display = 'none';
+
+                binaryButton.style.display = 'block';
+                decimalButton.style.display = 'none';
+            } else if (inputType === 'decimal') {
+                binaryInputFields.style.display = 'none';
+                decimalInputFields.style.display = 'block';
+
+                binaryButton.style.display = 'none';
+                decimalButton.style.display = 'block';
+            } else {
+                binaryInputFields.style.display = 'none';
+                decimalInputFields.style.display = 'none';
+
+                binaryButton.style.display = 'none';
+                decimalButton.style.display = 'none';
+            }
+
+            document.getElementById('outputResult').innerText = "Result will appear here ";
+        }
+        </script>
     </div>
     <div id="binaryInputFields" class="form-group">
         <label for="binaryInput">Binary Mantissa and Base-2:</label>
@@ -30,7 +62,9 @@
         <input type="number" id="decimalMantissa" placeholder="Enter decimal mantissa" step="any">
         <input type="number" id="decimalExponent" placeholder="Enter base-10 exponent">
     </div>
-    <button id="getResult" onclick="convertIEEE754()">Convert</button>
+    <button id="getResultBinary" class="getResult" onclick="convertIEEE754Binary()">Convert</button>
+    <button id="getResultDecimal" class="getResult" onclick="convertIEEE754Decimal()">Convert</button>
+
     <button id="saveButton" onclick="saveToFile()" disabled>Save to File</button>
 
     <div class="output" id="outputResult">Result will appear here</div>

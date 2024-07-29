@@ -27,7 +27,7 @@ input, select {
     box-sizing: border-box;
     margin-bottom: 10px;
 }
-button {
+button, .getResult {
     width: 100%;
     padding: 10px;
     background: #000;
@@ -39,6 +39,17 @@ button {
 }
 button:hover {
     background: #333;
+}
+
+button#getResultBinary{
+    background: #2855a7;
+
+    display: block;
+}
+button#getResultDecimal{
+    background: #28a745;
+
+    display: none;
 }
 button#saveButton {
     background: #28a745;
