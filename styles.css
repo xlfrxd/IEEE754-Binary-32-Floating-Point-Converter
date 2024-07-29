@@ -12,8 +12,7 @@ body {
     background: #fff;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 60%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .form-group {
     margin-bottom: 15px;
@@ -23,42 +22,35 @@ label {
     margin-bottom: 5px;
 }
 input, select {
-    width: calc(100% / 4 - 10px);
+    width: 100%;
     padding: 8px;
     box-sizing: border-box;
-    display: inline-block;
+    margin-bottom: 10px;
 }
-button#getResult {
+button {
     width: 100%;
     padding: 10px;
-    background: #007BFF;
+    background: #000;
     color: #fff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    margin-top: 10px;
 }
-
-button#saveToFile {
-    margin-top: 16px;
-    width: 100%;
-    padding: 10px;
-    background: #b9b9b9;
-    color: #f0f0f0;
-    border: none;
-    border-radius: 4px;
-    cursor: not-allowed;
-    display: block;
+button:hover {
+    background: #333;
 }
-
-button#saveToFile.enabled {
+button#saveButton {
     background: #28a745;
-    cursor: pointer;
-    display: block;
+    cursor: not-allowed;
+    display: none; /* Initially hidden */
 }
-
-button#saveToFile.disabled {
+button#saveButton.enabled {
     cursor: pointer;
-    display: block;
+    display: block; /* Show when enabled */
+}
+button#saveButton:hover {
+    background: #218838;
 }
 .output {
     margin-top: 20px;
