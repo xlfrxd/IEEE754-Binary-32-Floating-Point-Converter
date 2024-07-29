@@ -13,6 +13,7 @@ body {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 60%;
 }
 .form-group {
     margin-bottom: 15px;
@@ -27,7 +28,7 @@ input, select {
     box-sizing: border-box;
     display: inline-block;
 }
-button {
+button#getResult {
     width: 100%;
     padding: 10px;
     background: #007BFF;
@@ -36,8 +37,28 @@ button {
     border-radius: 4px;
     cursor: pointer;
 }
-button:hover {
-    background: #0056b3;
+
+button#saveToFile {
+    margin-top: 16px;
+    width: 100%;
+    padding: 10px;
+    background: #b9b9b9;
+    color: #f0f0f0;
+    border: none;
+    border-radius: 4px;
+    cursor: not-allowed;
+    display: block;
+}
+
+button#saveToFile.enabled {
+    background: #28a745;
+    cursor: pointer;
+    display: block;
+}
+
+button#saveToFile.disabled {
+    cursor: pointer;
+    display: block;
 }
 .output {
     margin-top: 20px;

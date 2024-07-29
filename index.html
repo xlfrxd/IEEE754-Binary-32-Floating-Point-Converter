@@ -37,7 +37,8 @@
             <option value="fixed">Fixed Point</option>
         </select>
     </div>
-    <button onclick="translateIEEE754()">Translate</button>
+    <button id="getResult" onclick="translateIEEE754()">Translate</button>
+    <button id="saveToFile" onclick="saveToFile()" disabled>Save to File</button>
 
     <div class="output" id="outputResult">Result will appear here</div>
 </div>
@@ -134,9 +135,28 @@
             const value = translator.calc();
             const result = translator.display(value, outputFormat);
             document.getElementById("outputResult").innerText = result;
+
+            const saveButton = document.getElementById("saveToFile");
+            saveButton.classList.add("enabled");
+            saveButton.removeAttribute("disabled");
         } catch (error) {
             document.getElementById("outputResult").innerText = `Error: ${error.message}`;
         }
+
+        document.getElementById("saveToFile")
+    }
+
+    function saveToFile() {
+        const result = document.getElementById("outputResult").innerText;
+        if (result === "" || result === "Result will appear here") {
+            alert("No result to save!");
+            return;
+        }
+        const blob = new Blob([result], { type: 'text/plain' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'IEEE754_result.txt';
+        link.click();
     }
 </script>
 
