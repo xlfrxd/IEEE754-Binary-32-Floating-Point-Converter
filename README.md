@@ -82,7 +82,5 @@ If you encounter any issues while using the translator, consider the following t
 
 This project was developed as part of the CSARCH2 course at De La Salle University - Manila, College of Computer Studies.
 
-- **Instructor**: [Instructor's Name]
-- **Developers**: [Your Name], [Team Members' Names]
-
-For further assistance, please contact [Your Email].
+- **Instructor**: Mr. Cempron, Jonathan Paul
+- **Developers**: Alfred Victoria, Izabella Imperial, Julianne Ong, Rey Inocencio 
