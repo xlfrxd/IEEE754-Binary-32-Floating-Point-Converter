@@ -3,42 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IEEE-754 Binary-32 Translator</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>IEEE-754 Binary-32 Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #000;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #333;
+        }
+        button#saveButton {
+            background: #28a745;
+            cursor: not-allowed;
+            display: none; /* Initially hidden */
+        }
+        button#saveButton.enabled {
+            cursor: pointer;
+            display: block; /* Show when enabled */
+        }
+        button#saveButton:hover {
+            background: #218838;
+        }
+        .output {
+            margin-top: 20px;
+            padding: 10px;
+            background: #e9ecef;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>IEEE-754 Binary-32 Translator</h2>
+    <h2>IEEE-754 Binary-32 Converter</h2>
     <div class="form-group">
         <label for="inputType">Input Type:</label>
         <select id="inputType" onchange="toggleInputFields()">
-            <option value="hex">Hexadecimal</option>
-            <option value="bin">Binary</option>
+            <option value="binary">Binary Mantissa and Base-2</option>
+            <option value="decimal">Decimal Mantissa and Base-10</option>
+            <option value="nan">NaN</option>
         </select>
     </div>
-    <div id="hexInputFields" class="form-group">
-        <label for="hexInput">Hexadecimal Input:</label>
-        <input type="text" id="hex1" maxlength="2" placeholder="00">
-        <input type="text" id="hex2" maxlength="2" placeholder="00">
-        <input type="text" id="hex3" maxlength="2" placeholder="00">
-        <input type="text" id="hex4" maxlength="2" placeholder="00">
+    <div id="binaryInputFields" class="form-group">
+        <label for="binaryInput">Binary Mantissa and Base-2:</label>
+        <input type="text" id="binaryMantissa" placeholder="Enter binary mantissa">
+        <input type="number" id="binaryExponent" placeholder="Enter base-2 exponent">
     </div>
-    <div id="binInputFields" class="form-group" style="display: none;">
-        <label for="binInput">Binary Input:</label>
-        <input type="text" id="binSign" maxlength="1" placeholder="S">
-        <input type="text" id="binExponent" maxlength="8" placeholder="Exponent">
-        <input type="text" id="binMantissa" maxlength="23" placeholder="Mantissa">
+    <div id="decimalInputFields" class="form-group" style="display: none;">
+        <label for="decimalInput">Decimal Mantissa and Base-10:</label>
+        <input type="number" id="decimalMantissa" placeholder="Enter decimal mantissa" step="any">
+        <input type="number" id="decimalExponent" placeholder="Enter base-10 exponent">
     </div>
-    <div class="form-group">
-        <label for="outputFormat">Output Format:</label>
-        <select id="outputFormat">
-            <option value="float">Floating Point</option>
-            <option value="fixed">Fixed Point</option>
-        </select>
-    </div>
-    <button id="getResult" onclick="translateIEEE754()">Translate</button>
-    <button id="saveToFile" onclick="saveToFile()" disabled>Save to File</button>
+    <button id="getResult" onclick="convertIEEE754()">Convert</button>
+    <button id="saveButton" onclick="saveToFile()" disabled>Save to File</button>
 
     <div class="output" id="outputResult">Result will appear here</div>
 </div>
@@ -46,104 +98,73 @@
 <script>
     function toggleInputFields() {
         const inputType = document.getElementById("inputType").value;
-        if (inputType === "hex") {
-            document.getElementById("hexInputFields").style.display = "block";
-            document.getElementById("binInputFields").style.display = "none";
+        if (inputType === "binary") {
+            document.getElementById("binaryInputFields").style.display = "block";
+            document.getElementById("decimalInputFields").style.display = "none";
+        } else if (inputType === "decimal") {
+            document.getElementById("binaryInputFields").style.display = "none";
+            document.getElementById("decimalInputFields").style.display = "block";
         } else {
-            document.getElementById("hexInputFields").style.display = "none";
-            document.getElementById("binInputFields").style.display = "block";
+            document.getElementById("binaryInputFields").style.display = "none";
+            document.getElementById("decimalInputFields").style.display = "none";
         }
     }
 
-    class IEEE754Translator {
-        constructor(inputType, inputArg) {
-            this.inputType = inputType;
-            this.inputArg = inputArg;
-        }
-
-        calc() {
-            if (this.inputType === "hex") {
-                return this.calcHex(this.inputArg);
-            } else if (this.inputType === "bin") {
-                return this.calcBin(this.inputArg);
-            } else {
-                throw new Error("Invalid input type. Use 'hex' or 'bin'.");
-            }
-        }
-
-        calcHex(hexStr) {
-            const binStr = parseInt(hexStr, 16).toString(2).padStart(32, '0');
-            return this.calcBin(binStr);
-        }
-
-        calcBin(binStr) {
-            const sign = parseInt(binStr[0], 2);
-            const exponent = parseInt(binStr.slice(1, 9), 2);
-            const mantissa = parseInt(binStr.slice(9), 2);
-
-            if (exponent === 0) {
-                if (mantissa === 0) {
-                    return sign === 0 ? 0.0 : -0.0;
-                } else {
-                    const exponentActual = -126;
-                    const mantissaActual = mantissa / Math.pow(2, 23);
-                    return Math.pow(-1, sign) * Math.pow(2, exponentActual) * mantissaActual;
-                }
-            } else if (exponent === 255) {
-                if (mantissa === 0) {
-                    return sign === 0 ? Infinity : -Infinity;
-                } else {
-                    return NaN;
-                }
-            } else {
-                const exponentActual = exponent - 127;
-                const mantissaActual = 1 + mantissa / Math.pow(2, 23);
-                return Math.pow(-1, sign) * Math.pow(2, exponentActual) * mantissaActual;
-            }
-        }
-
-        display(value, outputFormat) {
-            if (outputFormat === "fixed") {
-                return value.toFixed(6);
-            } else if (outputFormat === "float") {
-                return value.toString();
-            } else {
-                throw new Error("Invalid output format. Use 'fixed' or 'float'.");
-            }
-        }
-    }
-
-    function translateIEEE754() {
+    function convertIEEE754() {
         const inputType = document.getElementById("inputType").value;
-        let inputValue;
-        if (inputType === "hex") {
-            const hex1 = document.getElementById("hex1").value;
-            const hex2 = document.getElementById("hex2").value;
-            const hex3 = document.getElementById("hex3").value;
-            const hex4 = document.getElementById("hex4").value;
-            inputValue = hex1 + hex2 + hex3 + hex4;
+        let result = "";
+
+        if (inputType === "binary") {
+            const binaryMantissa = document.getElementById("binaryMantissa").value;
+            const binaryExponent = parseInt(document.getElementById("binaryExponent").value);
+
+            if (binaryMantissa === "" || isNaN(binaryExponent)) {
+                alert("Please enter valid binary mantissa and base-2 exponent.");
+                return;
+            }
+
+            result = binaryToIEEE754(binaryMantissa, binaryExponent);
+        } else if (inputType === "decimal") {
+            const decimalMantissa = parseFloat(document.getElementById("decimalMantissa").value);
+            const decimalExponent = parseInt(document.getElementById("decimalExponent").value);
+
+            if (isNaN(decimalMantissa) || isNaN(decimalExponent)) {
+                alert("Please enter valid decimal mantissa and base-10 exponent.");
+                return;
+            }
+
+            result = decimalToIEEE754(decimalMantissa, decimalExponent);
         } else {
-            const binSign = document.getElementById("binSign").value;
-            const binExponent = document.getElementById("binExponent").value;
-            const binMantissa = document.getElementById("binMantissa").value;
-            inputValue = binSign + binExponent + binMantissa;
-        }
-        const outputFormat = document.getElementById("outputFormat").value;
-
-        try {
-            const translator = new IEEE754Translator(inputType, inputValue);
-            const value = translator.calc();
-            const result = translator.display(value, outputFormat);
-            document.getElementById("outputResult").innerText = result;
-
-            const saveButton = document.getElementById("saveToFile");
-            saveButton.classList.add("enabled");
-            saveButton.removeAttribute("disabled");
-        } catch (error) {
-            document.getElementById("outputResult").innerText = `Error: ${error.message}`;
+            result = "NaN";
         }
 
-        document.getElementById("saveToFile")
+        document.getElementById("outputResult").innerText = result;
+
+        // Enable the save button
+        const saveButton = document.getElementById("saveButton");
+        saveButton.classList.add("enabled");
+        saveButton.removeAttribute("disabled");
+    }
+
+    function binaryToIEEE754(mantissa, exponent) {
+        // Convert binary mantissa to decimal
+        let decimalMantissa = parseInt(mantissa, 2);
+
+        // Calculate the value
+        let value = decimalMantissa * Math.pow(2, exponent);
+
+        // Convert to IEEE-754 format
+        let ieee754 = new IEEE754Converter(value);
+        return ieee754.toBinary() + " | " + ieee754.toHex();
+    }
+
+    function decimalToIEEE754(mantissa, exponent) {
+        // Calculate the value
+        let value = mantissa * Math.pow(10, exponent);
+
+        // Convert to IEEE-754 format
+        let ieee754 = new IEEE754Converter(value);
+        return ieee754.toBinary() + " | " + ieee754.toHex();
     }
 
     function saveToFile() {
@@ -157,6 +178,26 @@
         link.href = URL.createObjectURL(blob);
         link.download = 'IEEE754_result.txt';
         link.click();
+    }
+
+    class IEEE754Converter {
+        constructor(value) {
+            this.value = value;
+        }
+
+        toBinary() {
+            let buffer = new ArrayBuffer(4);
+            new Float32Array(buffer)[0] = this.value;
+            let binary = Array.prototype.map.call(new Uint8Array(buffer), x => ('00000000' + x.toString(2)).slice(-8)).join('');
+            return binary.slice(0, 1) + " " + binary.slice(1, 9) + " " + binary.slice(9);
+        }
+
+        toHex() {
+            let buffer = new ArrayBuffer(4);
+            new Float32Array(buffer)[0] = this.value;
+            let hex = Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2)).join('');
+            return hex;
+        }
     }
 </script>
 
