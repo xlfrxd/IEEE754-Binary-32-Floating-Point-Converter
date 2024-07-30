@@ -71,8 +71,13 @@ function convertIEEE754Binary() {
 
     // Ensure biased exponent is within range
     if (biasedExponent >= 255) {
-        result = 'Overflow: The exponent is too large for single precision.';
-        document.getElementById('outputResult').innerText = result;
+        if (signBit == 1) {
+            result = "1 | 11111111 | 00000000000000000000000";
+        }
+        else {
+            result = "0 | 11111111 | 00000000000000000000000";
+        }
+        document.getElementById('outputResult').innerText = `${result} : ${binaryToHex(result.replaceAll(" | ",""))}`;
         return;
     } else if (biasedExponent <= 0) {
         result = 'Underflow: The exponent is too small for single precision.';
@@ -148,8 +153,13 @@ function convertIEEE754Decimal() {
 
     // Ensure biased exponent is within range
     if (biasedExponent >= 255) {
-        result = 'Overflow: The exponent is too large for single precision.';
-        document.getElementById('outputResult').innerText = result;
+        if (signBit == 1) {
+            result = "1 | 11111111 | 00000000000000000000000";
+        }
+        else {
+            result = "0 | 11111111 | 00000000000000000000000";
+        }
+        document.getElementById('outputResult').innerText = `${result} : ${binaryToHex(result.replaceAll(" | ",""))}`;
         return;
     } else if (biasedExponent <= 0) {
         result = 'Underflow: The exponent is too small for single precision.';
@@ -166,8 +176,6 @@ function convertIEEE754Decimal() {
     result = `${signBitStr}${exponentStr}${fractionStr}`
     let resultString = `${signBitStr} | ${exponentStr} | ${fractionStr}`;
     document.getElementById('outputResult').innerText = `${resultString} : ${binaryToHex(result)}`;
-   
-
 
 }
 
