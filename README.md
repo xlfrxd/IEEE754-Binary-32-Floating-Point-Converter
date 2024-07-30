@@ -108,6 +108,37 @@ If you encounter any issues while using the translator, consider the following t
 
 ### Special Cases
 
+**Zero**
+
+![Zero](https://github.com/user-attachments/assets/f41c9dc2-bbfa-4c36-a2f6-1961f1a0e4e4)
+
+**Negative Zero**
+
+![Negative Zero](https://github.com/user-attachments/assets/5d27ad43-541d-45f6-9928-d2f77a206c7e)
+
+**Denormalized**
+
+**Positive Infinity**
+
+![image](https://github.com/user-attachments/assets/18dea5a0-2e5a-471c-8b09-1588ca13b2d2)
+
+**Negative Infinity**
+
+![image](https://github.com/user-attachments/assets/5535fcd0-5002-4dc3-98a3-9faf0694e515)
+
+**sNaN**
+
+**qNaN**
+
+### Decimal
+**Postive Decimal**
+
+![Normal Numbe](https://github.com/user-attachments/assets/d3ddeefc-81a1-4fd3-82d6-ac4b1803315c)
+
+**Negative Decimal**
+
+![Negative Decimal](https://github.com/user-attachments/assets/d65a1442-ec29-4238-988b-0f77a1ddafa9)
+
 
 ## Credits
 
