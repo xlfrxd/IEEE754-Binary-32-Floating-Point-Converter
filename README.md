@@ -79,23 +79,35 @@ If you encounter any issues while using the translator, consider the following t
 3. If the result is not displaying correctly, refresh the page and try again.
 
 ## Test Cases
+
+### Binary 
 **Normal Binary**
+
 ![Normal Binary](https://github.com/user-attachments/assets/ab25b260-01ba-43ef-b45b-99d384de7adf)
 
 **Negative Binary**
+
 ![Negative Binary](https://github.com/user-attachments/assets/a3d71f86-953e-4b49-82e6-21510e8a05fb)
 
 **Negative Exponent**
+
 ![Negative Exponent](https://github.com/user-attachments/assets/7e12a09e-b674-42a5-84f1-34fa4ec116ab)
 
 **Negative Binary and Exponent**
+
 ![Negative Binary Negative Exponent](https://github.com/user-attachments/assets/e5d416c4-b442-4272-94da-d309d5797981)
 
 **Smallest Exponent**
+
 ![Smallest](https://github.com/user-attachments/assets/a4b5617d-9c4f-481e-9496-869e55287bf2)
 
 **Largest Exponent**
+
 ![Largest Exponent](https://github.com/user-attachments/assets/1c9e572f-1ff1-4eca-a315-3a7c029c72af)
+
+
+### Special Cases
+
 
 ## Credits
 
