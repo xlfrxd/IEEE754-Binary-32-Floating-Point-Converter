@@ -76,8 +76,20 @@ function convertIEEE754Binary() {
     // Adjust mantissa to fit 23 bits and add implicit leading 1
     normalizedMantissa = normalizedMantissa.substring(1, 24).padEnd(23, '0');
 
-    // Ensure biased exponent is within range
-    if (biasedExponent > 255) {
+    // Check for denormalized numbers
+    if (biasedExponent <=0) {
+
+        const shiftAmount = 0 - biasedExponent;
+        const nMantissa = mantissa.replace('-', '');
+        const shiftedMantissa = '0'.repeat(shiftAmount) + nMantissa.replace('.', '');
+
+        // Ensure the mantissa fits within 23 bits
+        const denormalizedMantissa = shiftedMantissa.slice(0, 23).padEnd(23, '0');
+
+        result = `${signBit} | 00000000 | ${denormalizedMantissa}`;
+        document.getElementById('outputResult').innerText = `${result} : ${binaryToHex(result.replaceAll(" | ", ""))}`;
+        return;
+    } else if (biasedExponent >= 255) {
         if (signBit == 1) {
             result = "1 | 11111111 | 00000000000000000000000";
         }
@@ -86,21 +98,15 @@ function convertIEEE754Binary() {
         }
         document.getElementById('outputResult').innerText = `${result} : ${binaryToHex(result.replaceAll(" | ",""))}`;
         return;
-    } else if (biasedExponent <= 0) {
-        result = 'Underflow: The exponent is too small for single precision.';
-        document.getElementById('outputResult').innerText = result;
-        return;
+    } else {
+        // Convert the fields to binary representation
+        const signBitStr = signBit.toString();
+        const exponentStr = biasedExponent.toString(2).padStart(8, '0');
+        const fractionStr = normalizedMantissa.padEnd(23, '0');
+        result = `${signBitStr}${exponentStr}${fractionStr}`;
+        let resultString = `${signBitStr} | ${exponentStr} | ${fractionStr}`;
+        document.getElementById('outputResult').innerText = `${resultString} : ${binaryToHex(result)}`;
     }
-
-    // Convert the fields to binary representation
-    const signBitStr = signBit.toString();
-    const exponentStr = biasedExponent.toString(2).padStart(8, '0');
-    const fractionStr = normalizedMantissa.padEnd(23, '0');
-
-    // Concatenate the parts to get the final IEEE 754 binary string
-    result = `${signBitStr}${exponentStr}${fractionStr}`;
-    let resultString = `${signBitStr} | ${exponentStr} | ${fractionStr}`;
-    document.getElementById('outputResult').innerText = `${resultString} : ${binaryToHex(result)}`;
 }
 
 
