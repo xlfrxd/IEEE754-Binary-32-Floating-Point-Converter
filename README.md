@@ -133,6 +133,8 @@ If you encounter any issues while using the translator, consider the following t
 
 **Denormalized**
 
+![image](https://github.com/user-attachments/assets/11d99e5c-30a8-4cde-8ebc-96113e3b1206)
+
 **Positive Infinity**
 
 ![image](https://github.com/user-attachments/assets/18dea5a0-2e5a-471c-8b09-1588ca13b2d2)
