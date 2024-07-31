@@ -4,11 +4,6 @@ function convertIEEE754Binary() {
     let result = '';
 
     // Validate input
-    if (!/^[01.-]+$/.test(mantissa)) {
-        result = 'Invalid mantissa. Please enter a binary number.';
-        document.getElementById('outputResult').innerText = result;
-        return;
-    }
     if (mantissa === "Infinity") {
         result = "0 | 11111111 | 00000000000000000000000";
         document.getElementById('outputResult').innerText = result;
@@ -34,6 +29,13 @@ function convertIEEE754Binary() {
         document.getElementById('outputResult').innerText = result;
         return;
     }
+    /*
+    if (!/^[01.-]+$/.test(mantissa)) {
+        result = 'Invalid mantissa. Please enter a binary number.';
+        document.getElementById('outputResult').innerText = result;
+        return;
+    }
+    */
 
     // Determine sign bit (0 for positive numbers, 1 for negative numbers)
     const signBit = mantissa.startsWith('-') ? 1 : 0;
@@ -70,7 +72,7 @@ function convertIEEE754Binary() {
     normalizedMantissa = normalizedMantissa.substring(1, 24).padEnd(23, '0');
 
     // Ensure biased exponent is within range
-    if (biasedExponent >= 255) {
+    if (biasedExponent > 255) {
         if (signBit == 1) {
             result = "1 | 11111111 | 00000000000000000000000";
         }
@@ -177,6 +179,18 @@ function convertIEEE754Decimal() {
     let resultString = `${signBitStr} | ${exponentStr} | ${fractionStr}`;
     document.getElementById('outputResult').innerText = `${resultString} : ${binaryToHex(result)}`;
 
+}
+
+function handleNaN(signBit, normalizedMantissa) {
+    let result = '';
+    if (normalizedMantissa.startsWith('1')) {
+        // Quiet NaN
+        result = `${signBit} | 11111111 | ${normalizedMantissa.padEnd(23, '0').substring(0, 23)}`;
+    } else {
+        // Signaling NaN
+        result = `${signBit} | 11111111 | 01000000000000000000000${normalizedMantissa.padEnd(22, '0').substring(0, 22)}`;
+    }
+    return result;
 }
 
 function binaryToHex(binary) {
