@@ -6,22 +6,22 @@ function convertIEEE754Binary() {
     // Validate input
     if (mantissa === "Infinity") {
         result = "0 | 11111111 | 00000000000000000000000";
-        document.getElementById('outputResult').innerText = result;
+        document.getElementById('outputResult').innerText = `${result} : ${binaryToHex(result.replaceAll(' | ',''))}`;
         return;
     }
     if (mantissa === "-Infinity") {
         result = "1 | 11111111 | 00000000000000000000000";
-        document.getElementById('outputResult').innerText = result;
+        document.getElementById('outputResult').innerText = `${result} : ${binaryToHex(result.replaceAll(' | ',''))}`;
         return;
     }
     if (mantissa === "0") {
         result = "0 | 00000000 | 00000000000000000000000";
-        document.getElementById('outputResult').innerText = result;
+        document.getElementById('outputResult').innerText = `${result} : ${binaryToHex(result.replaceAll(' | ',''))}`;
         return;
     }
     if (mantissa === "-0") {
         result = "1 | 00000000 | 00000000000000000000000";
-        document.getElementById('outputResult').innerText = result;
+        document.getElementById('outputResult').innerText = `${result} : ${binaryToHex(result.replaceAll(' | ',''))}`;
         return;
     }
     if (isNaN(exponent) || !Number.isInteger(exponent)) {
@@ -29,13 +29,6 @@ function convertIEEE754Binary() {
         document.getElementById('outputResult').innerText = result;
         return;
     }
-    /*
-    if (!/^[01.-]+$/.test(mantissa)) {
-        result = 'Invalid mantissa. Please enter a binary number.';
-        document.getElementById('outputResult').innerText = result;
-        return;
-    }
-    */
 
     // Determine sign bit (0 for positive numbers, 1 for negative numbers)
     const signBit = mantissa.startsWith('-') ? 1 : 0;
@@ -106,22 +99,22 @@ function convertIEEE754Decimal() {
     // Validate input
     if(decimalMantissa === "Infinity") {
         result = "0 | 11111111 | 00000000000000000000000";
-        document.getElementById('outputResult').innerText = result;
+        document.getElementById('outputResult').innerText = `${result} : ${binaryToHex(result.replaceAll(' | ',''))}`;
         return;
     }
     if(decimalMantissa === "-Infinity") {
         result = "1 | 11111111 | 00000000000000000000000";
-        document.getElementById('outputResult').innerText = result;
+        document.getElementById('outputResult').innerText = `${result} : ${binaryToHex(result.replaceAll(' | ',''))}`;
         return;
     }
     if(decimalMantissa === "0") {
         result = "0 | 00000000 | 00000000000000000000000";
-        document.getElementById('outputResult').innerText = result;
+        document.getElementById('outputResult').innerText = `${result} : ${binaryToHex(result.replaceAll(' | ',''))}`;
         return;
     }
     if(decimalMantissa === "-0"){
         result = "1 | 00000000 | 00000000000000000000000";
-        document.getElementById('outputResult').innerText = result;
+        document.getElementById('outputResult').innerText = `${result} : ${binaryToHex(result.replaceAll(' | ',''))}`;
         return;
     }   
     if (isNaN(decimalExponent) || !Number.isInteger(decimalExponent)) {
