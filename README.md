@@ -27,7 +27,7 @@ The IEEE-754 Binary-32 Floating Point Translator is a web-based tool designed to
 
 ## Getting Started
 
-To start using the translator, simply open the `index.html` file in your web browser. The user interface will guide you through the process of entering your input and obtaining the corresponding decimal output.
+To start using the translator, simply open the [IEEE754-32 Binary 32 Converter](https://ieee-754-binary-32-floating-point-translator.vercel.app/) in your web browser. The user interface will guide you through the process of entering your input and obtaining the corresponding decimal output.
 
 ## Using the Translator
 
@@ -65,10 +65,25 @@ To start using the translator, simply open the `index.html` file in your web bro
 
 The translator handles the following special cases:
 
-1. **Zero**: Both positive and negative zero.
-2. **Infinity**: Both positive and negative infinity.
-3. **NaN**: Not-a-Number values.
-4. **Denormalized Numbers**: When the exponent is zero and the mantissa is non-zero.
+**Zero:** 
+- When asked to represent Zero values in Single-Precision Binary, the representation consists of the respective sign bit, and all bits of the sign and exponent fields set to 0.
+
+**Infinity:**
+- Falls under this case when the normalized value in binary format has an exponent exceeding 127.
+- Representation consists of the sign bit, all sign bits set to 1, and all exponent fields set to 0.
+
+**Denormalized Numbers:**
+- Numbers that are smaller than the smallest normaliz number/falls under the denormalized area.
+- Falls under this case when the normalized value in binary format has an exponent less than -126
+- To represent denormalized numbers, exponent bits are set to zero and the mantissa follows the normal representation
+
+**NaN**: 
+- Signaling NaN:
+    - signals invalid operation exception
+    - Represented by sign bit, all exponent bits set to 1, and significand follows the rules: MSb = 0, is nonezero
+- Quiet NaN:
+    - floating-point result allows results to be propagated
+    - Represented by sign bit, all exponent bits set to 1, and significand follows the rules: MSb = 1, is nonezero
 
 ## Troubleshooting
 
