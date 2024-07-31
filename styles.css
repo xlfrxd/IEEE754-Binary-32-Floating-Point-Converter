@@ -56,7 +56,7 @@ button#saveButton {
     cursor: not-allowed;
     display: none; /* Initially hidden */
 }
-button#saveButton.enabled {
+button#saveButton {
     cursor: pointer;
     display: block; /* Show when enabled */
 }

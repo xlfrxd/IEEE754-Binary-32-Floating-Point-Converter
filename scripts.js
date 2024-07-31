@@ -1,3 +1,15 @@
+function saveToFile() {
+    const resultText = document.getElementById('outputResult').innerText;
+    const blob = new Blob([resultText], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'result.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
 function convertIEEE754Binary() {
     const mantissa = document.getElementById('binaryMantissa').value;
     const exponent = parseInt(document.getElementById('binaryExponent').value);
@@ -171,7 +183,6 @@ function convertIEEE754Decimal() {
     result = `${signBitStr}${exponentStr}${fractionStr}`
     let resultString = `${signBitStr} | ${exponentStr} | ${fractionStr}`;
     document.getElementById('outputResult').innerText = `${resultString} : ${binaryToHex(result)}`;
-
 }
 
 function handleNaN(signBit, normalizedMantissa) {
