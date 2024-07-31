@@ -1,6 +1,6 @@
-# IEEE754-Binary-32-Floating-Point-Translator
+# IEEE754-Binary-32-Floating-Point-Converter
 
-Web-based IEEE754 Binary-32 Floating Point Simulator for the completion of the requirement CSARCH2 under De La Salle University - Manila, College of Computer Studies.
+Web-based IEEE754 Binary-32 Floating Point Converter Simulator for the completion of the requirement CSARCH2 under De La Salle University - Manila, College of Computer Studies.
 
 ## User Manual
 
@@ -15,7 +15,7 @@ This user manual provides detailed instructions on how to use the IEEE-754 Binar
     - [Entering Hexadecimal Input](#entering-hexadecimal-input)
     - [Entering Binary Input](#entering-binary-input)
     - [Choosing Output Format](#choosing-output-format)
-    - [Translating the Input](#translating-the-input)
+    - [Converting the Input](#converting-the-input)
     - [Saving the Result to a File](#saving-the-result-to-a-file)
 4. [Special Cases](#special-cases)
 5. [Troubleshooting](#troubleshooting)
@@ -23,11 +23,11 @@ This user manual provides detailed instructions on how to use the IEEE-754 Binar
 
 ## Introduction
 
-The IEEE-754 Binary-32 Floating Point Translator is a web-based tool designed to convert hexadecimal and binary representations of IEEE-754 Binary-32 floating-point numbers into their decimal equivalents. This tool supports both normalized and special cases such as zero, infinity, and NaN.
+The IEEE-754 Binary-32 Floating Point Converter is a web-based tool designed to convert hexadecimal and binary representations of IEEE-754 Binary-32 floating-point numbers into their decimal equivalents. This tool supports both normalized and special cases such as zero, infinity, and NaN.
 
 ## Getting Started
 
-To start using the translator, simply open the [IEEE754-32 Binary 32 Converter](https://ieee-754-binary-32-floating-point-translator.vercel.app/) in your web browser. The user interface will guide you through the process of entering your input and obtaining the corresponding decimal output.
+To start using the translator, simply open the [IEEE754-32 Binary 32 Converter](https://ieee-754-binary-32-floating-point.vercel.app/) in your web browser. The user interface will guide you through the process of entering your input and obtaining the corresponding decimal output.
 
 ## Using the Translator
 
@@ -51,7 +51,7 @@ To start using the translator, simply open the [IEEE754-32 Binary 32 Converter](
 1. Locate the "Output Format" dropdown menu below the input fields.
 2. Select either "Floating Point" or "Fixed Point" to choose the desired format for the output.
 
-### Translating the Input
+### Converting the Input
 
 1. Click the "Translate" button to process the input and display the result.
 2. The translated result will appear in the output section below the button.
