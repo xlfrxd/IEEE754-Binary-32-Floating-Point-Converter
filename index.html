@@ -40,6 +40,21 @@
 
                 binaryButton.style.display = 'none';
                 decimalButton.style.display = 'block';
+            } else if (inputType === 'nan') {
+                binaryInputFields.style.display = 'none';
+                decimalInputFields.style.display = 'none';
+
+                binaryButton.style.display = 'none';
+                decimalButton.style.display = 'none';
+
+                // Display both sNaN and qNaN
+                const sNaNBinary = '0 | 11111111 | 01000000000000000000000';
+                const sNaNHex = binaryToHex(sNaNBinary.replaceAll(' | ', ''));
+                const qNaNBinary = '0 | 11111111 | 10000000000000000000000';
+                const qNaNHex = binaryToHex(qNaNBinary.replaceAll(' | ', ''));
+                result = `sNaN: ${sNaNBinary} : ${sNaNHex}\nqNaN: ${qNaNBinary} : ${qNaNHex}`;
+                document.getElementById('outputResult').innerText = result;
+                return
             } else {
                 binaryInputFields.style.display = 'none';
                 decimalInputFields.style.display = 'none';
