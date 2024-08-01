@@ -34,31 +34,22 @@ To start using the translator, simply open the [IEEE754-32 Binary 32 Converter](
 ### Selecting Input Type
 
 1. Locate the "Input Type" dropdown menu at the top of the form.
-2. Select either "Hexadecimal" or "Binary" depending on the type of input you wish to enter.
-
-### Entering Hexadecimal Input
-
-1. After selecting "Hexadecimal" as the input type, four input fields labeled "00" will appear.
-2. Enter the hexadecimal value (8 characters, 2 characters per field) you want to convert.
+2. Select either "decimal" or "Binary" depending on the type of input you wish to enter.
 
 ### Entering Binary Input
 
-1. After selecting "Binary" as the input type, three input fields labeled "S", "Exponent", and "Mantissa" will appear.
-2. Enter the binary value for the sign (1 bit), exponent (8 bits), and mantissa (23 bits) respectively.
+1. After selecting "Binary" as the input type, two input fields labeled "Exponent", and "Mantissa" will appear.
+2. Input the respective values.
 
-### Choosing Output Format
-
-1. Locate the "Output Format" dropdown menu below the input fields.
-2. Select either "Floating Point" or "Fixed Point" to choose the desired format for the output.
 
 ### Converting the Input
 
-1. Click the "Translate" button to process the input and display the result.
-2. The translated result will appear in the output section below the button.
+1. Click the "convert" button to process the input and display the result.
+2. The result will appear in the output section below the button.
 
 ### Saving the Result to a File
 
-1. Once the translation is complete, the "Save to File" button will be enabled.
+1. Once the conversion is complete, the "Save to File" button will be enabled.
 2. Click the "Save to File" button to download the result as a text file (`IEEE754_result.txt`).
 
 ## Special Cases
